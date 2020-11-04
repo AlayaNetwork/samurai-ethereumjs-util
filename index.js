@@ -305,7 +305,7 @@ exports.isValidPrivate = function (privateKey) {
 exports.isValidPublic = function (publicKey, sanitize) {
   if (publicKey.length === 64) {
     // Convert to SEC1 for secp256k1
-    return secp256k1.publicKeyVerify(Buffer.concat([ Buffer.from([4]), publicKey ]))
+    return secp256k1.publicKeyVerify(Buffer.concat([Buffer.from([4]), publicKey]))
   }
 
   if (!sanitize) {

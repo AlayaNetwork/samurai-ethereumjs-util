@@ -18,8 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-var requireLocal = require('require-local')
-const bech32 = requireLocal('./bech32')
+const bech32 = require('./bech32')
 
 module.exports = {
   encode: encode,
