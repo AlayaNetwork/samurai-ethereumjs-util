@@ -3,6 +3,7 @@ const secp256k1 = require('secp256k1')
 const assert = require('assert')
 const rlp = require('rlp')
 const BN = require('bn.js')
+const segwitAddr = require('./segwit_addr')
 const createHash = require('create-hash')
 const Buffer = require('safe-buffer').Buffer
 Object.assign(exports, require('ethjs-util'))
@@ -461,6 +462,59 @@ exports.privateToAddress = function (privateKey) {
 }
 
 /**
+ * Checks if the given string is an bech32 address
+ *
+ * @method isBech32Address
+ * @param {String} address the given bech32 adress
+ * @return {Boolean}
+ */
+exports.isBech32Address = function (address) {
+  if (address.length !== 42) {
+    return false
+  }
+  const hrp = address.substr(0, 3)
+  const ret = segwitAddr.decode(hrp, address)
+  if (ret === null) {
+    return false
+  }
+  return true
+}
+
+/**
+ * Transforms given string to bech32 address
+ *
+ * @method toBech32Address
+ * @param {String} hrp
+ * @param {String} address
+ * @return {String} formatted bech32 address
+ */
+exports.toBech32Address = function (hrp, address) {
+  if (exports.isValidAddress(address)) {
+    return segwitAddr.EncodeAddress(hrp, address)
+  }
+
+  return ''
+}
+
+/**
+ * Resolve the bech32 address
+ *
+ * @method decodeBech32Address
+ * @param {String} bech32Address
+ * @return {String} formatted address
+ */
+exports.decodeBech32Address = function (bech32Address) {
+  if (exports.isBech32Address(bech32Address)) {
+    const hrp = bech32Address.substr(0, 3)
+    const address = segwitAddr.DecodeAddress(hrp, bech32Address)
+    if (address !== null) {
+      return '0x' + address
+    }
+  }
+  return ''
+}
+
+/**
  * Checks if the address is a valid. Accepts checksummed addresses too
  * @param {String} address
  * @return {Boolean}
@@ -549,6 +603,10 @@ exports.isPrecompiled = function (address) {
  */
 exports.addHexPrefix = function (str) {
   if (typeof str !== 'string') {
+    return str
+  }
+
+  if (str.startsWith('atx') || str.startsWith('atp')) {
     return str
   }
 

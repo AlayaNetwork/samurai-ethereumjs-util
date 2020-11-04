@@ -1,5 +1,5 @@
 {
-  "name": "ethereumjs-util",
+  "name": "@alayanetwork/ethereumjs-util",
   "version": "5.2.0",
   "description": "a collection of utility functions for Ethereum",
   "main": "dist/index.js",
@@ -10,16 +10,16 @@
     "coverage": "npm run build:dist && istanbul cover _mocha",
     "coveralls": "npm run coverage && coveralls <coverage/lcov.info",
     "lint": "standard",
-    "prepublishOnly": "npm run lint && npm run build:dist && npm run test",
+    "prepublishOnly": "npm run lint && npm run build:dist",
     "test": "npm run test:node && npm run test:browser",
     "test:browser": "npm run build:dist && karma start karma.conf.js",
     "test:node": "npm run build:dist && istanbul test mocha -- --reporter spec",
-    "build:dist": "babel index.js --source-root ./ -d ./dist",
+    "build:dist": "babel index.js bech32.js segwit_addr.js --source-root ./ -d ./dist",
     "build:docs": "documentation build ./index.js --github --sort-order='alpha' -f md > ./docs/index.md"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethereumjs/ethereumjs-util.git"
+    "url": "https://github.com/alayanetwork/samurai-ethereumjs-util.git"
   },
   "keywords": [
     "ethereum",
@@ -99,9 +99,9 @@
   ],
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/ethereumjs/ethereumjs-util/issues"
+    "url": "https://github.com/alayanetwork/samurai-ethereumjs-util/issues"
   },
-  "homepage": "https://github.com/ethereumjs/ethereumjs-util",
+  "homepage": "https://github.com/alayanetwork/samurai-ethereumjs-util",
   "dependencies": {
     "bn.js": "^4.11.0",
     "create-hash": "^1.1.2",
