@@ -606,7 +606,7 @@ exports.addHexPrefix = function (str) {
     return str
   }
 
-  if (str.startsWith('atx') || str.startsWith('atp')) {
+  if (str && exports.isBech32Address(str)) {
     return str
   }
 
